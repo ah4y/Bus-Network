@@ -4,15 +4,6 @@ A Django web application for browsing and booking bus routes between stations, w
 
 ## Links
 
-*(Note: Cloud deployment was skipped as an optional bonus per student preference; the app runs locally).*
-
-## Features
-# BusNet 
-
-A Django web application for browsing and booking bus routes between stations, with user authentication.
-
-## Links
-
 **GitHub Repository:** [https://github.com/ah4y/busnet](https://github.com/ah4y/busnet)
 
 ## Features
@@ -27,11 +18,11 @@ A Django web application for browsing and booking bus routes between stations, w
 
 ### Bonus Features
 
-- ✅ **My Routes** — A page showing all routes the logged-in user has booked.
-- ✅ **Station Detail** — Page listing all routes departing from and arriving at a station.
-- ✅ **Search/Filter** — Filter routes by station name or city from the index page.
-- ✅ **Passenger Count** — Displayed next to each route on the index page.
-- ✅ **Styled with Bootstrap** — Bootswatch Brite theme with Bootstrap 5, Sora font, and bright UI cards.
+-  **My Routes** — A page showing all routes the logged-in user has booked.
+-  **Station Detail** — Page listing all routes departing from and arriving at a station.
+-  **Search/Filter** — Filter routes by station name or city from the index page.
+-  **Passenger Count** — Displayed next to each route on the index page.
+-  **Styled with Bootstrap** — Bootswatch Brite theme with Bootstrap 5, Sora font, and bright UI cards.
 
 ## Tech Stack
 
