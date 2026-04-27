@@ -2,6 +2,10 @@
 
 A Django web application for browsing and booking bus routes between stations, with user authentication.
 
+## Links
+**GitHub Repository:** [https://github.com/tooti2/busnet](https://github.com/tooti2/busnet)
+*(Note: Cloud deployment was skipped as an optional bonus per student preference; the app runs locally).*
+
 ## Features
 
 ### Core Features
