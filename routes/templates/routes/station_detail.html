@@ -1,0 +1,96 @@
+{% extends "routes/layout.html" %}
+
+{% block title %}{{ station.name }} — BusNet{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Routes</a></li>
+        <li class="breadcrumb-item active">{{ station.name }} ({{ station.city }})</li>
+    </ol>
+</nav>
+
+<div class="hero-section text-center mb-5">
+    <div class="station-badge-lg origin-badge mb-3 mx-auto">
+        <i class="bi bi-building"></i>
+    </div>
+    <h1 class="display-6 fw-bold">{{ station.name }}</h1>
+    <p class="text-muted lead">{{ station.city }}</p>
+</div>
+
+<div class="row g-4">
+    <!-- Departures -->
+    <div class="col-md-6">
+        <div class="card glass-card">
+            <div class="card-header bg-transparent border-bottom border-secondary">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="bi bi-box-arrow-right me-2 text-success"></i>Departures
+                    <span class="badge bg-success ms-2">{{ departures|length }}</span>
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                {% if departures %}
+                <ul class="list-group list-group-flush bg-transparent">
+                    {% for r in departures %}
+                    <li class="list-group-item bg-transparent">
+                        <a href="{% url 'route_detail' r.id %}" class="text-decoration-none d-flex justify-content-between align-items-center station-link">
+                            <div>
+                                <i class="bi bi-arrow-right-circle me-1 text-success"></i>
+                                <strong>{{ r.destination.name }}</strong>
+                                <span class="text-muted ms-1">({{ r.destination.city }})</span>
+                            </div>
+                            <div>
+                                <span class="badge bg-duration me-1"><i class="bi bi-clock me-1"></i>{{ r.duration }} min</span>
+                                <span class="badge bg-passengers"><i class="bi bi-people-fill me-1"></i>{{ r.passenger_count }}</span>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <p class="mb-0">No departures from this station.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Arrivals -->
+    <div class="col-md-6">
+        <div class="card glass-card">
+            <div class="card-header bg-transparent border-bottom border-secondary">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="bi bi-box-arrow-in-right me-2 text-info"></i>Arrivals
+                    <span class="badge bg-info ms-2">{{ arrivals|length }}</span>
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                {% if arrivals %}
+                <ul class="list-group list-group-flush bg-transparent">
+                    {% for r in arrivals %}
+                    <li class="list-group-item bg-transparent">
+                        <a href="{% url 'route_detail' r.id %}" class="text-decoration-none d-flex justify-content-between align-items-center station-link">
+                            <div>
+                                <i class="bi bi-arrow-left-circle me-1 text-info"></i>
+                                <strong>{{ r.origin.name }}</strong>
+                                <span class="text-muted ms-1">({{ r.origin.city }})</span>
+                            </div>
+                            <div>
+                                <span class="badge bg-duration me-1"><i class="bi bi-clock me-1"></i>{{ r.duration }} min</span>
+                                <span class="badge bg-passengers"><i class="bi bi-people-fill me-1"></i>{{ r.passenger_count }}</span>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <p class="mb-0">No arrivals at this station.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

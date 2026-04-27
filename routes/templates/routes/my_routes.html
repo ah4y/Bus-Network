@@ -1,0 +1,59 @@
+{% extends "routes/layout.html" %}
+
+{% block title %}My Routes — BusNet{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center mb-5">
+    <h1 class="display-5 fw-bold mb-2">
+        <i class="bi bi-bookmark-star-fill me-2 text-accent"></i>My Routes
+    </h1>
+    <p class="text-muted lead">Routes you've booked a seat on</p>
+</div>
+
+{% if routes %}
+<div class="row g-4">
+    {% for route in routes %}
+    <div class="col-md-6 col-lg-4">
+        <a href="{% url 'route_detail' route.id %}" class="text-decoration-none">
+            <div class="card route-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="station-badge origin-badge">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div class="route-line"></div>
+                        <div class="station-badge dest-badge">
+                            <i class="bi bi-geo-fill"></i>
+                        </div>
+                    </div>
+                    <h5 class="card-title fw-semibold mb-1">
+                        {{ route.origin.name }} → {{ route.destination.name }}
+                    </h5>
+                    <p class="text-muted small mb-3">
+                        {{ route.origin.city }} → {{ route.destination.city }}
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-duration">
+                            <i class="bi bi-clock me-1"></i>{{ route.duration }} min
+                        </span>
+                        <span class="badge bg-passengers">
+                            <i class="bi bi-people-fill me-1"></i>{{ route.passenger_count }} passenger{{ route.passenger_count|pluralize }}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top border-secondary text-center">
+                    <span class="text-success small"><i class="bi bi-check-circle-fill me-1"></i>Booked</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-bookmark display-1 text-muted"></i>
+    <p class="text-muted mt-3">You haven't booked any routes yet.</p>
+    <a href="{% url 'index' %}" class="btn btn-accent mt-2">Browse Routes</a>
+</div>
+{% endif %}
+{% endblock %}

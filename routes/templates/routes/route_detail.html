@@ -1,0 +1,120 @@
+{% extends "routes/layout.html" %}
+
+{% block title %}{{ route.origin.name }} → {{ route.destination.name }} — BusNet{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Routes</a></li>
+        <li class="breadcrumb-item active">{{ route.origin.name }} → {{ route.destination.name }}</li>
+    </ol>
+</nav>
+
+<div class="row g-4">
+    <!-- Route Info Card -->
+    <div class="col-lg-7">
+        <div class="card glass-card">
+            <div class="card-body p-4">
+                <div class="route-visual mb-4">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                        <div class="text-center">
+                            <div class="station-badge-lg origin-badge mb-2">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <h4 class="fw-bold mb-0">
+                                <a href="{% url 'station_detail' route.origin.id %}" class="text-decoration-none station-link">
+                                    {{ route.origin.name }}
+                                </a>
+                            </h4>
+                            <span class="text-muted">{{ route.origin.city }}</span>
+                        </div>
+
+                        <div class="route-arrow-section text-center flex-grow-1">
+                            <div class="route-arrow-line"></div>
+                            <span class="badge bg-duration fs-6 mt-2">
+                                <i class="bi bi-clock me-1"></i>{{ route.duration }} min
+                            </span>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="station-badge-lg dest-badge mb-2">
+                                <i class="bi bi-geo-fill"></i>
+                            </div>
+                            <h4 class="fw-bold mb-0">
+                                <a href="{% url 'station_detail' route.destination.id %}" class="text-decoration-none station-link">
+                                    {{ route.destination.name }}
+                                </a>
+                            </h4>
+                            <span class="text-muted">{{ route.destination.city }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book / Unbook / Login prompt -->
+                <div class="mt-4 pt-3 border-top border-secondary">
+                    {% if user.is_authenticated %}
+                        {% if is_passenger %}
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>You are booked</span>
+                            <form method="post" action="{% url 'unbook' route.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="bi bi-x-circle me-1"></i>Cancel Booking
+                                </button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <form method="post" action="{% url 'book' route.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-accent btn-lg">
+                                <i class="bi bi-ticket-perforated me-1"></i>Book a Seat
+                            </button>
+                        </form>
+                        {% endif %}
+                    {% else %}
+                    <div class="alert glass-alert alert-info mb-0">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <a href="{% url 'login' %}?next={% url 'route_detail' route.id %}" class="alert-link">Log in</a> or
+                        <a href="{% url 'register' %}" class="alert-link">register</a> to book a seat on this route.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Passengers Card -->
+    <div class="col-lg-5">
+        <div class="card glass-card">
+            <div class="card-header bg-transparent border-bottom border-secondary">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="bi bi-people-fill me-2 text-accent"></i>Passengers
+                    <span class="badge bg-accent ms-2">{{ passengers|length }}</span>
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                {% if passengers %}
+                <ul class="list-group list-group-flush bg-transparent">
+                    {% for p in passengers %}
+                    <li class="list-group-item bg-transparent d-flex align-items-center gap-2 passenger-item">
+                        <div class="avatar-circle">
+                            {{ p.username|first|upper }}
+                        </div>
+                        <span>{{ p.username }}</span>
+                        {% if p == user %}
+                        <span class="badge bg-success ms-auto">You</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-person-dash display-6"></i>
+                    <p class="mt-2 mb-0">No passengers yet</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

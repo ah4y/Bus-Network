@@ -1,0 +1,406 @@
+/* ========================================
+   BusNet — Custom Styles
+   Dark glassmorphism theme
+   ======================================== */
+
+:root {
+    --accent: #6c63ff;
+    --accent-hover: #5a52d5;
+    --accent-glow: rgba(108, 99, 255, 0.25);
+    --surface: rgba(30, 30, 46, 0.75);
+    --surface-hover: rgba(40, 40, 60, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(22, 22, 35, 0.6);
+    --origin-color: #22c55e;
+    --dest-color: #3b82f6;
+    --duration-bg: rgba(108, 99, 255, 0.15);
+    --passengers-bg: rgba(34, 197, 94, 0.15);
+}
+
+/* — Global — */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 40%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #e2e8f0;
+}
+
+main {
+    flex: 1;
+}
+
+a {
+    color: var(--accent);
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+/* — Navbar — */
+.glass-nav {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.brand-icon {
+    font-size: 1.5rem;
+    color: var(--accent);
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+.navbar-brand span {
+    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+}
+
+.text-accent {
+    color: var(--accent) !important;
+}
+
+.btn-register {
+    background: var(--accent) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 6px 16px !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+    background: var(--accent-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+/* — Cards — */
+.glass-card,
+.route-card {
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.route-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(108, 99, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(108, 99, 255, 0.12);
+}
+
+.route-card .card-title {
+    color: #f1f5f9;
+}
+
+/* — Buttons — */
+.btn-accent {
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 10px 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.btn-accent:hover {
+    background: linear-gradient(135deg, var(--accent-hover), #6d28d9);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--accent-glow);
+    color: #fff;
+}
+
+/* — Station Badges — */
+.station-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.station-badge-lg {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto;
+}
+
+.origin-badge {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--origin-color);
+    border: 2px solid rgba(34, 197, 94, 0.3);
+}
+
+.dest-badge {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--dest-color);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+/* — Route Line (card) — */
+.route-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--origin-color), var(--dest-color));
+    margin: 0 8px;
+    position: relative;
+    border-radius: 1px;
+}
+
+.route-line::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--dest-color);
+    border-top: 2px solid var(--dest-color);
+    transform: rotate(45deg);
+}
+
+/* — Route Arrow (detail page) — */
+.route-arrow-section {
+    position: relative;
+}
+
+.route-arrow-line {
+    height: 3px;
+    background: linear-gradient(90deg, var(--origin-color), var(--accent), var(--dest-color));
+    border-radius: 2px;
+    position: relative;
+}
+
+.route-arrow-line::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid var(--dest-color);
+    border-top: 3px solid var(--dest-color);
+    transform: rotate(45deg);
+}
+
+/* — Badges — */
+.bg-duration {
+    background: var(--duration-bg) !important;
+    color: var(--accent) !important;
+    font-weight: 500;
+}
+
+.bg-passengers {
+    background: var(--passengers-bg) !important;
+    color: var(--origin-color) !important;
+    font-weight: 500;
+}
+
+.bg-accent {
+    background: var(--accent) !important;
+}
+
+/* — Alerts — */
+.glass-alert {
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* — Input — */
+.glass-input-group .input-group-text {
+    background: var(--surface);
+    border-color: var(--glass-border);
+    color: var(--accent);
+}
+
+.glass-input-group .form-control {
+    background: var(--surface);
+    border-color: var(--glass-border);
+    color: #e2e8f0;
+}
+
+.glass-input-group .form-control:focus {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem var(--accent-glow);
+    color: #f1f5f9;
+}
+
+.glass-input-group .form-control::placeholder {
+    color: #64748b;
+}
+
+/* — Avatar Circle — */
+.avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+/* — Passenger list — */
+.passenger-item {
+    border-color: var(--glass-border) !important;
+    transition: background 0.2s ease;
+}
+
+.passenger-item:hover {
+    background: var(--surface-hover) !important;
+}
+
+/* — Station link — */
+.station-link {
+    color: #e2e8f0 !important;
+    transition: color 0.2s ease;
+}
+
+.station-link:hover {
+    color: var(--accent) !important;
+}
+
+/* — Breadcrumb — */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+}
+
+.breadcrumb-item a {
+    color: var(--accent);
+}
+
+.breadcrumb-item.active {
+    color: #94a3b8;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #475569;
+}
+
+/* — Hero — */
+.hero-section {
+    padding: 2rem 0 0;
+}
+
+/* — Form styles — */
+.form-control {
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.form-control:focus {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem var(--accent-glow);
+    color: #f1f5f9;
+}
+
+.form-control::placeholder {
+    color: #64748b;
+}
+
+.input-group-text {
+    background: var(--surface);
+    border-color: var(--glass-border);
+    color: var(--accent);
+    border-radius: 10px 0 0 10px;
+}
+
+.form-label {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+}
+
+/* — Footer — */
+footer {
+    border-top: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+}
+
+/* — Responsive tweaks — */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 1.75rem;
+    }
+
+    .route-arrow-section {
+        margin: 1rem 0;
+    }
+}
+
+/* — Animations — */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.route-card {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.route-card:nth-child(2) { animation-delay: 0.05s; }
+.route-card:nth-child(3) { animation-delay: 0.1s; }
+.route-card:nth-child(4) { animation-delay: 0.15s; }
+.route-card:nth-child(5) { animation-delay: 0.2s; }
+.route-card:nth-child(6) { animation-delay: 0.25s; }
+
+.glass-card {
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+/* — Scrollbar — */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(15, 12, 41, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(108, 99, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(108, 99, 255, 0.5);
+}

@@ -1,0 +1,63 @@
+{% extends "routes/layout.html" %}
+
+{% block title %}Log In — BusNet{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card glass-card">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="station-badge-lg dest-badge mb-3 mx-auto">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                    </div>
+                    <h2 class="fw-bold">Welcome Back</h2>
+                    <p class="text-muted">Log in to book your bus routes</p>
+                </div>
+
+                <form method="post" action="{% url 'login' %}" id="login-form">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger glass-alert">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        Invalid username or password. Please try again.
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-semibold">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" name="username" id="id_username" class="form-control"
+                                   required autofocus placeholder="Enter your username">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label fw-semibold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" id="id_password" class="form-control"
+                                   required placeholder="Enter your password">
+                        </div>
+                    </div>
+
+                    {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-accent w-100 btn-lg">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Log In
+                    </button>
+                </form>
+
+                <p class="text-center mt-4 mb-0 text-muted">
+                    Don't have an account?
+                    <a href="{% url 'register' %}" class="text-accent">Register</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "routes/layout.html" %}
+
+{% block title %}Register — BusNet{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card glass-card">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="station-badge-lg origin-badge mb-3 mx-auto">
+                        <i class="bi bi-person-plus-fill"></i>
+                    </div>
+                    <h2 class="fw-bold">Create Account</h2>
+                    <p class="text-muted">Join BusNet to start booking routes</p>
+                </div>
+
+                <form method="post" action="{% url 'register' %}" id="register-form">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger glass-alert">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                            <div>{{ error }}</div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-semibold">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" name="username" id="id_username" class="form-control"
+                                   value="{{ form.username.value|default:'' }}" required autofocus
+                                   placeholder="Choose a username">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label fw-semibold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password1" id="id_password1" class="form-control"
+                                   required placeholder="Create a password">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="id_password2" class="form-label fw-semibold">Confirm Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                            <input type="password" name="password2" id="id_password2" class="form-control"
+                                   required placeholder="Confirm your password">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-accent w-100 btn-lg">
+                        <i class="bi bi-person-check me-1"></i>Register
+                    </button>
+                </form>
+
+                <p class="text-center mt-4 mb-0 text-muted">
+                    Already have an account?
+                    <a href="{% url 'login' %}" class="text-accent">Log in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

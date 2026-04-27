@@ -1,0 +1,75 @@
+{% extends "routes/layout.html" %}
+
+{% block title %}All Routes — BusNet{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center mb-5">
+    <h1 class="display-5 fw-bold mb-2">
+        <i class="bi bi-signpost-2-fill me-2 text-accent"></i>Bus Routes
+    </h1>
+    <p class="text-muted lead">Browse and book seats on available bus routes</p>
+
+    <!-- Search bar -->
+    <form method="get" action="{% url 'index' %}" class="row g-2 justify-content-center mt-4" id="search-form">
+        <div class="col-md-5 col-lg-4">
+            <div class="input-group glass-input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" name="q" class="form-control" placeholder="Search by station or city…" value="{{ query }}" id="search-input">
+                {% if query %}
+                <a href="{% url 'index' %}" class="input-group-text text-danger" title="Clear"><i class="bi bi-x-lg"></i></a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-accent px-4">Search</button>
+        </div>
+    </form>
+</div>
+
+{% if query %}
+<p class="text-muted mb-3">Showing results for "<strong>{{ query }}</strong>" — {{ routes|length }} route{{ routes|length|pluralize }}</p>
+{% endif %}
+
+{% if routes %}
+<div class="row g-4">
+    {% for route in routes %}
+    <div class="col-md-6 col-lg-4">
+        <a href="{% url 'route_detail' route.id %}" class="text-decoration-none">
+            <div class="card route-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="station-badge origin-badge">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div class="route-line"></div>
+                        <div class="station-badge dest-badge">
+                            <i class="bi bi-geo-fill"></i>
+                        </div>
+                    </div>
+                    <h5 class="card-title fw-semibold mb-1">
+                        {{ route.origin.name }} → {{ route.destination.name }}
+                    </h5>
+                    <p class="text-muted small mb-3">
+                        {{ route.origin.city }} → {{ route.destination.city }}
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-duration">
+                            <i class="bi bi-clock me-1"></i>{{ route.duration }} min
+                        </span>
+                        <span class="badge bg-passengers">
+                            <i class="bi bi-people-fill me-1"></i>{{ route.passenger_count }} passenger{{ route.passenger_count|pluralize }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-bus-front display-1 text-muted"></i>
+    <p class="text-muted mt-3">No routes found{% if query %} matching your search{% endif %}.</p>
+</div>
+{% endif %}
+{% endblock %}
