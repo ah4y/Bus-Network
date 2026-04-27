@@ -54,6 +54,7 @@ Visit http://127.0.0.1:8000
    - `SECRET_KEY`
    - `DEBUG=False`
    - `ALLOWED_HOSTS` (comma-separated, include your Railway domain)
+   - `SQLITE_PATH` (recommended for Railway, e.g. `/tmp/db.sqlite3` or `/data/db.sqlite3` with a volume)
    - `CSRF_TRUSTED_ORIGINS` (optional, comma-separated https origins)
 3. Railway will use the Procfile to start Gunicorn.
 4. Run static collection and migrations from the Railway console if needed:

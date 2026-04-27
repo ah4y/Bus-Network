@@ -63,10 +63,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
+sqlite_path = os.environ.get('SQLITE_PATH')
+db_path = Path(sqlite_path) if sqlite_path else (BASE_DIR / "db.sqlite3")
+db_path.parent.mkdir(parents=True, exist_ok=True)
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "data" / "db.sqlite3",
+        "NAME": db_path,
     }
 }
 
