@@ -12,6 +12,7 @@ from .models import Station, Route
 def index(request):
     """List all routes with optional search/filter by origin or destination."""
     query = request.GET.get('q', '').strip()
+    sort = request.GET.get('sort', 'city').strip()
     routes = Route.objects.select_related('origin', 'destination').annotate(
         passenger_count=Count('passengers')
     )
@@ -22,10 +23,43 @@ def index(request):
             Q(destination__name__icontains=query) |
             Q(destination__city__icontains=query)
         )
-    routes = routes.order_by('origin__city', 'origin__name')
+    popular_route = routes.order_by('-passenger_count', 'duration').first()
+
+    if sort == 'duration_asc':
+        order_by = ('duration', 'origin__city', 'origin__name')
+    elif sort == 'duration_desc':
+        order_by = ('-duration', 'origin__city', 'origin__name')
+    elif sort == 'passengers_desc':
+        order_by = ('-passenger_count', 'origin__city', 'origin__name')
+    elif sort == 'passengers_asc':
+        order_by = ('passenger_count', 'origin__city', 'origin__name')
+    elif sort == 'route':
+        order_by = ('origin__name', 'destination__name')
+    else:
+        sort = 'city'
+        order_by = ('origin__city', 'origin__name', 'destination__city', 'destination__name')
+
+    routes = routes.order_by(*order_by)
+
+    route_count = Route.objects.count()
+    station_count = Station.objects.count()
+    total_bookings = Route.objects.aggregate(
+        total_bookings=Count('passengers')
+    )['total_bookings'] or 0
+    user_booking_count = (
+        request.user.booked_routes.count()
+        if request.user.is_authenticated
+        else 0
+    )
     return render(request, 'routes/index.html', {
         'routes': routes,
         'query': query,
+        'sort': sort,
+        'route_count': route_count,
+        'station_count': station_count,
+        'total_bookings': total_bookings,
+        'user_booking_count': user_booking_count,
+        'popular_route': popular_route,
     })
 
 

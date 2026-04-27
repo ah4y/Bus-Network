@@ -20,11 +20,97 @@
                 {% endif %}
             </div>
         </div>
+        <div class="col-md-4 col-lg-3">
+            <select name="sort" class="form-select sort-select" aria-label="Sort routes">
+                <option value="city" {% if sort == 'city' %}selected{% endif %}>Sort by city</option>
+                <option value="route" {% if sort == 'route' %}selected{% endif %}>Sort by route name</option>
+                <option value="duration_asc" {% if sort == 'duration_asc' %}selected{% endif %}>Duration: shortest</option>
+                <option value="duration_desc" {% if sort == 'duration_desc' %}selected{% endif %}>Duration: longest</option>
+                <option value="passengers_desc" {% if sort == 'passengers_desc' %}selected{% endif %}>Passengers: most</option>
+                <option value="passengers_asc" {% if sort == 'passengers_asc' %}selected{% endif %}>Passengers: fewest</option>
+            </select>
+        </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-accent px-4">Search</button>
         </div>
     </form>
 </div>
+
+<div class="row g-3 justify-content-center mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card h-100">
+            <div class="stat-label">Routes</div>
+            <div class="stat-value">{{ route_count }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card h-100">
+            <div class="stat-label">Stations</div>
+            <div class="stat-value">{{ station_count }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card h-100">
+            <div class="stat-label">Bookings</div>
+            <div class="stat-value">{{ total_bookings }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card h-100">
+            <div class="stat-label">Your bookings</div>
+            <div class="stat-value">{{ user_booking_count }}</div>
+            {% if not user.is_authenticated %}
+            <div class="stat-footnote">Log in to track</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if query or sort != 'city' %}
+<div class="d-flex flex-wrap gap-2 align-items-center mb-4">
+    {% if query %}
+    <span class="filter-pill"><i class="bi bi-search"></i>{{ query }}</span>
+    {% endif %}
+    {% if sort != 'city' %}
+    <span class="filter-pill">
+        <i class="bi bi-funnel"></i>
+        {% if sort == 'route' %}
+            Sorted by route name
+        {% elif sort == 'duration_asc' %}
+            Duration: shortest
+        {% elif sort == 'duration_desc' %}
+            Duration: longest
+        {% elif sort == 'passengers_desc' %}
+            Passengers: most
+        {% elif sort == 'passengers_asc' %}
+            Passengers: fewest
+        {% else %}
+            Sorted
+        {% endif %}
+    </span>
+    {% endif %}
+    <a href="{% url 'index' %}" class="btn btn-sm btn-outline-secondary ms-auto">Clear all</a>
+</div>
+{% endif %}
+
+{% if popular_route %}
+<div class="featured-route p-4 mb-4">
+    <div class="row align-items-center g-3">
+        <div class="col-lg-8">
+            <div class="featured-label mb-2">Featured route</div>
+            <h3 class="fw-bold mb-1">{{ popular_route.origin.name }} → {{ popular_route.destination.name }}</h3>
+            <p class="featured-meta mb-0">
+                {{ popular_route.origin.city }} to {{ popular_route.destination.city }} ·
+                {{ popular_route.duration }} min ·
+                {{ popular_route.passenger_count }} passenger{{ popular_route.passenger_count|pluralize }}
+            </p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+            <a href="{% url 'route_detail' popular_route.id %}" class="btn btn-accent">View route</a>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% if query %}
 <p class="text-muted mb-3">Showing results for "<strong>{{ query }}</strong>" — {{ routes|length }} route{{ routes|length|pluralize }}</p>
@@ -70,6 +156,9 @@
 <div class="text-center py-5">
     <i class="bi bi-bus-front display-1 text-muted"></i>
     <p class="text-muted mt-3">No routes found{% if query %} matching your search{% endif %}.</p>
+    {% if query or sort != 'city' %}
+    <a href="{% url 'index' %}" class="btn btn-accent mt-2">Back to all routes</a>
+    {% endif %}
 </div>
 {% endif %}
 {% endblock %}
