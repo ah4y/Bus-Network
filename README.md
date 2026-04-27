@@ -4,7 +4,7 @@ A Django web application for browsing and booking bus routes between stations, w
 
 ## Links
 **GitHub Repository:** [https://github.com/tooti2/busnet](https://github.com/tooti2/busnet)
-*(Note: Cloud deployment was skipped as an optional bonus per student preference; the app runs locally).*
+*(Note: لإhe app runs locally only).*
 
 ## Features
 
@@ -16,11 +16,11 @@ A Django web application for browsing and booking bus routes between stations, w
 - **Booking Logic** — POST-only book/unbook, restricted to authenticated users via `@login_required`.
 
 ### Bonus Features
-- ✅ **My Routes** — A page showing all routes the logged-in user has booked.
-- ✅ **Station Detail** — Page listing all routes departing from and arriving at a station.
-- ✅ **Search/Filter** — Filter routes by station name or city from the index page.
-- ✅ **Passenger Count** — Displayed next to each route on the index page.
-- ✅ **Styled with Bootstrap** — Dark glassmorphism theme with Bootstrap 5, Inter font, and micro-animations.
+-  **My Routes** — A page showing all routes the logged-in user has booked.
+-  **Station Detail** — Page listing all routes departing from and arriving at a station.
+-  **Search/Filter** — Filter routes by station name or city from the index page.
+-  **Passenger Count** — Displayed next to each route on the index page.
+-  **Styled with Bootstrap** — Dark glassmorphism theme with Bootstrap 5, Inter font, and micro-animations.
 
 ## Local Setup
 
@@ -36,6 +36,3 @@ python manage.py runserver
 
 Visit http://127.0.0.1:8000
 
-## Known Limitations
-
-- None at this time.
